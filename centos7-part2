@@ -1,0 +1,19 @@
+#!/bin/bash
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+yum -y install nginx nodejs redis
+systemctl start nginx
+systemctl enable nginx
+systemctl start redis
+systemctl enable redis
+yum -y install libXrender libXext xorg-x11-fonts-75dpi xorg-x11-fonts-Type1
+wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+tar -xf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz -C /opt
+ln -s /opt/wkhtmltox/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
+ln -s /opt/wkhtmltox/bin/wkhtmltoimage /usr/bin/wkhtmltoimage
+adduser bench -d /opt/bench
+echo 'password' | passwd bench
+usermod -aG wheel bench
+su - bench
+cd /opt/bench
+git clone https://github.com/frappe/bench bench-repo
+pip install -e bench-repo
