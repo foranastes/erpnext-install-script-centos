@@ -1,0 +1,12 @@
+#!/bin/bash
+yum update -y && yum upgrade -y
+yum install -y epel-release
+yum groupinstall -y "Development tools"
+yum install -y redhat-lsb-core git python-setuptools python-devel openssl-devel libffi-devel
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+pip install --upgrade pip setuptools
+pip install ansible
+yum -y install mariadb mariadb-server mysql-devel
+curl --silent --location https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash -
+yum -y install mariadb mariadb-server mysql-devel
